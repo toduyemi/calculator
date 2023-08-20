@@ -7,8 +7,8 @@ function subtract(x, y) {
     return x - y;
 }
 
-function multiply(args) {
-    return +args.reduce((total, value) => total * value, 1);
+function multiply(x, y) {
+    return x * y;
 };
 
 function divide(x, y) {
@@ -24,10 +24,13 @@ function operate(sign, x, y) {
             return subtract(+x, +y);
             break;
         case ('*'):
-            return multiply(args);
+            return multiply(+x, +y);
             break;
         case ('/'):
             return divide(+x, +y);
+            break;
+        case ('='):
+            return x;
             break;
     }
 
@@ -40,11 +43,12 @@ let secondNumber = {
     storedCheck: false,
 };
 let operator;
+let operatorClicked = false;
 
 const display = document.querySelector('#display');
 const numberButtons = document.querySelectorAll('.number-btn');
 const operatorButtons = document.querySelectorAll('.operator-btn');
-
+// const equalButton = document.querySelector('=');
 
 function populateDisplay(digit) {
     display.textContent += digit;
@@ -61,31 +65,57 @@ function clearDisplay() {
 
 
 numberButtons.forEach(button => {
-    button.addEventListener('click', () => populateDisplay(button.value));
+    button.addEventListener('click', () => {
+        
+        if (operatorClicked) {
+            clearDisplay();
+            populateDisplay(button.value);
+        }
+
+        else {
+            populateDisplay(button.value);
+        }
+        operatorClicked = false;
+    });
 });
 
 operatorButtons.forEach(button => {
     button.addEventListener('click', () => {
-        
-        if (!firstNumber.storedCheck) {
-            firstNumber.number = storeDisplay();
-            firstNumber.storedCheck ^= true;
-            operator = button.value;
-            clearDisplay();
-        }
+        if (!operatorClicked) {
+            
+            if (button.value !== '=') {
+                if (!firstNumber.storedCheck) {
+                    firstNumber.number = storeDisplay();
+                    firstNumber.storedCheck ^= true;
+                }
 
-        else if (!secondNumber.storedCheck) {
-            secondNumber.number = storeDisplay();
-            secondNumber.storedCheck ^= true;
-            clearDisplay();
-        }
+                else if (firstNumber.storedCheck) {
+                    secondNumber.number = storeDisplay();
+                    firstNumber.number = operate(operator, firstNumber.number, secondNumber.number);
+                    display.textContent = firstNumber.number;
+                }
+            }
 
-        else if (firstNumber.storedCheck && secondNumber.storedCheck) {
-            display.textContent = operate(operator, firstNumber.number, secondNumber.number);
-        }
+            else {
+                if (firstNumber.storedCheck) {
+                    secondNumber.number = storeDisplay();
+                    firstNumber.number = operate(operator, firstNumber.number, secondNumber.number);
+                    display.textContent = firstNumber.number;
+                }
 
-        
-    })
+                else {
+                    // dont do shit
+                }
+            }
+
+
+        // else if (firstNumber.storedCheck && secondNumber.storedCheck) {
+
+        // }
+        }
+        operator = button.value;
+        operatorClicked = true;
+    });
 });
 
 
