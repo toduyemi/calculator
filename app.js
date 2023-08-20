@@ -83,36 +83,23 @@ operatorButtons.forEach(button => {
     button.addEventListener('click', () => {
         if (!operatorClicked) {
             
-            if (button.value !== '=') {
-                if (!firstNumber.storedCheck) {
-                    firstNumber.number = storeDisplay();
-                    firstNumber.storedCheck ^= true;
-                }
-
-                else if (firstNumber.storedCheck) {
-                    secondNumber.number = storeDisplay();
-                    firstNumber.number = operate(operator, firstNumber.number, secondNumber.number);
-                    display.textContent = firstNumber.number;
-                }
+            if (!firstNumber.storedCheck) {
+                firstNumber.number = storeDisplay();
+                firstNumber.storedCheck ^= true;
             }
 
-            else {
-                if (firstNumber.storedCheck) {
-                    secondNumber.number = storeDisplay();
-                    firstNumber.number = operate(operator, firstNumber.number, secondNumber.number);
-                    display.textContent = firstNumber.number;
-                }
-
-                else {
-                    // dont do shit
-                }
+            else if (firstNumber.storedCheck) {
+                secondNumber.number = storeDisplay();
+                firstNumber.number = operate(operator, firstNumber.number, secondNumber.number);
+                display.textContent = firstNumber.number;
             }
+        }
 
 
         // else if (firstNumber.storedCheck && secondNumber.storedCheck) {
 
         // }
-        }
+        
         operator = button.value;
         operatorClicked = true;
     });
