@@ -6,8 +6,9 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 100vh;
+    gap: 100px;
     margin: 0;
+    min-height: 100vh;
 }
 
 .header {
@@ -20,15 +21,74 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 60vh;
+    align-self: center;
+    border: 6px solid black;
+    border-bottom: 15px solid black;
+    border-right: 10px solid black;
+    border-radius: 8px;
+    padding: 50px;
+    gap: 20px;
+    flex-basis: 600px;
+    width: 450px;
+    box-sizing: border-box;
 }
 
-    .display-container {
+.display-container {
+    font-family: 'Press Start 2P', Roboto;
     display: flex;
     justify-content: flex-end;
-    border: 3px solid black;
-    min-height: 30px;
-    min-width: 200px;
+    flex-grow: 0;
+    border: 3.5px solid black;
+    border-bottom: 8px solid black;
+    border-radius: 6px;
+    min-height: 50px;
+    min-width: 340px;
+    padding: 5px;
+}
+
+.btn-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 70%;
+    width: 100%;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.number-btn,
+.operator-btn,
+.app-btn {
+    font-family: Roboto, sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    background-color: transparent;
+    border: 3.5px solid black;
+    border-bottom: 8px solid black;
+    border-right: 5px solid black;
+    transition-duration: 0.45s;
+    min-height: 60px;
+    width: 65px;
+}
+
+.number-btn:hover,
+.operator-btn:hover,
+.app-btn:hover {
+    background: black;
+    color: whitesmoke;
+    cursor: pointer;
+}
+
+.number-btn:active,
+.operator-btn:active,
+.app-btn:active {
+    background: black;
+    color: whitesmoke;
+    cursor: pointer;
+    border: 1px solid black;
 }
 
 .footer {

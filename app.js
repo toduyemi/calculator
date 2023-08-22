@@ -1,3 +1,16 @@
+let firstNumber = {
+    storedCheck: false,
+};
+let secondNumber;
+let operator;
+let operatorClicked = false;
+let displayText;
+let MAX = 11;
+
+const display = document.querySelector('#display');
+const numberButtons = document.querySelectorAll('.number-btn');
+const operatorButtons = document.querySelectorAll('.operator-btn');
+const clear = document.querySelector('#clear');
 // operation functions
 function add(x, y) {
     return x + y;
@@ -36,22 +49,14 @@ function operate(sign, x, y) {
 
 }
 
-let firstNumber = {
-    storedCheck: false,
-};
-let secondNumber = {
-    storedCheck: false,
-};
-let operator;
-let operatorClicked = false;
-
-const display = document.querySelector('#display');
-const numberButtons = document.querySelectorAll('.number-btn');
-const operatorButtons = document.querySelectorAll('.operator-btn');
 // const equalButton = document.querySelector('=');
 
 function populateDisplay(digit) {
-    display.textContent += digit;
+    displayText = display.textContent;
+    if (displayText.length < MAX) {
+        display.textContent += digit;
+    }
+    
 }
 
 function storeDisplay() {
@@ -62,7 +67,16 @@ function clearDisplay() {
     display.textContent = "";
 }
 
+function resetApp() {
+    clearDisplay();
+    firstNumber.number = null;
+    firstNumber.storedCheck= false;
+    secondNumber = null;
+    operator = null;
+    operatorClicked = false;
+}
 
+clear.addEventListener('click', resetApp);
 
 numberButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -80,6 +94,7 @@ numberButtons.forEach(button => {
 });
 
 operatorButtons.forEach(button => {
+    displayText = display.textContent;
     button.addEventListener('click', () => {
         if (!operatorClicked) {
             
@@ -89,23 +104,19 @@ operatorButtons.forEach(button => {
             }
 
             else if (firstNumber.storedCheck) {
-                secondNumber.number = storeDisplay();
-                firstNumber.number = operate(operator, firstNumber.number, secondNumber.number);
-                display.textContent = firstNumber.number;
+                secondNumber = storeDisplay();
+                firstNumber.number = operate(operator, firstNumber.number, secondNumber);
+                if (firstNumber['number'].toString().length <= MAX) {
+                    display.textContent = firstNumber.number;
+                }
+
+                else {
+                    display.textContent = firstNumber['number'].toExponential(5);
+                }
+                
             }
-        }
-
-
-        // else if (firstNumber.storedCheck && secondNumber.storedCheck) {
-
-        // }
-        
+        }     
         operator = button.value;
         operatorClicked = true;
     });
 });
-
-
-
-
-
